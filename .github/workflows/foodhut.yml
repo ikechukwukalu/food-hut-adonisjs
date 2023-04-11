@@ -7,6 +7,15 @@ on:
 jobs:
   unit_tests:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mariadb:10.4.27
+        env:
+          MARIADB_ROOT_PASSWORD: 12345678
+          MARIADB_DATABASE: food-hut-adonis
+        ports:
+          - 3307:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
@@ -23,7 +32,7 @@ jobs:
       - name: Run migrations and Execute tests
         env:
           DB_CONNECTION: mysql
-          DB_PORT: 3306
+          DB_PORT: 3307
           DB_USER: root
           DB_PASSWORD: 12345678
           DB_DATABASE: food-hut-adonis
