@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build
-        run: node ace build --productions
+        run: node ace build --production
       - name: Run migrations and Execute tests
         env:
           DB_CONNECTION: mysql
