@@ -1,8 +1,8 @@
 import Event from '@ioc:Adonis/Core/Event'
 import Ingredient from 'App/Models/Ingredient'
-import ReorderNotification from "App/Models/ReorderNotification"
-import Merchant from "App/Models/Merchant"
-import ReorderLevelNotification from "App/Mailers/ReorderLevelNotification"
+import ReorderNotification from 'App/Models/ReorderNotification'
+import Merchant from 'App/Models/Merchant'
+import ReorderLevelNotification from 'App/Mailers/ReorderLevelNotification'
 
 Event.on('merchant:reorderlevel', async (ingredient: Ingredient) => {
   if (await Ingredient.isMerchantNotifiedForReorder(ingredient)) {

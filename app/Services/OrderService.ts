@@ -1,7 +1,7 @@
 import { AuthContract } from '@ioc:Adonis/Addons/Auth'
-import Product from "App/Models/Product"
-import Ingredient from "App/Models/Ingredient"
-import Order from "App/Models/Order"
+import Product from 'App/Models/Product'
+import Ingredient from 'App/Models/Ingredient'
+import Order from 'App/Models/Order'
 import Event from '@ioc:Adonis/Core/Event'
 
 type ORDER = {
