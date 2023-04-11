@@ -1,12 +1,12 @@
-import Route from '@ioc:Adonis/Core/Route';
+import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
   Route.group(() => {
     Route.group(() => {
-      Route.post('/product', 'OrdersController.order').as('order');
+      Route.post('/product', 'OrdersController.order').as('order')
     })
-    .prefix('/order');
+    .prefix('/order')
   })
-  .middleware('auth:api');
+  .middleware('auth:api')
 })
-.prefix('/api/v1');
+.prefix('/api/v1')

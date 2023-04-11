@@ -1,13 +1,13 @@
-import { AuthContract } from '@ioc:Adonis/Addons/Auth';
-import Product from "App/Models/Product";
-import Ingredient from "App/Models/Ingredient";
-import Order from "App/Models/Order";
-import Event from '@ioc:Adonis/Core/Event';
+import { AuthContract } from '@ioc:Adonis/Addons/Auth'
+import Product from "App/Models/Product"
+import Ingredient from "App/Models/Ingredient"
+import Order from "App/Models/Order"
+import Event from '@ioc:Adonis/Core/Event'
 
 type ORDER = {
   product_id: number,
   quantity: number
-} | undefined;
+} | undefined
 
 /**
  * Add Order To Collection.
@@ -16,19 +16,19 @@ type ORDER = {
  * @return Map<number, \App\Models\ORDER>
  */
 export const addOrderToCollection = (validated: Array<any>): Map<number, ORDER> => {
-  const collection = new Map();
+  const collection = new Map()
 
   validated.map((ele: ORDER) => {
     if (ele !== undefined) {
       if (collection.has(ele.product_id)) {
-        ele.quantity = ele.quantity + collection.get(ele.product_id).quantity;
+        ele.quantity = ele.quantity + collection.get(ele.product_id).quantity
       }
 
-      collection.set(ele.product_id, ele);
+      collection.set(ele.product_id, ele)
     }
   })
 
-  return collection;
+  return collection
 }
 
 /**
@@ -38,7 +38,7 @@ export const addOrderToCollection = (validated: Array<any>): Map<number, ORDER> 
  * @return Array<number>
  */
 export const filterProductIDs = (collection: Map<number, ORDER>): Array<number> => {
-  return Array.from(collection.keys());
+  return Array.from(collection.keys())
 }
 
 /**
@@ -48,7 +48,7 @@ export const filterProductIDs = (collection: Map<number, ORDER>): Array<number> 
  * @return Promise<\App\Model\Product[]>
  */
 export const getProducts = async (productIDs: Array<number>): Promise<Product[]> => {
-  return await Product.query().whereIn('id', productIDs).exec();
+  return await Product.query().whereIn('id', productIDs).exec()
 }
 
 /**
@@ -62,7 +62,7 @@ export const getProducts = async (productIDs: Array<number>): Promise<Product[]>
 export const getOrders = async (products: Product[], collection: Map<number, ORDER>, auth: AuthContract): Promise<Order[]> => {
   return await Promise.all(
     products.map(async (product: Product) => {
-      return await processOrder(product, collection, auth);
+      return await processOrder(product, collection, auth)
     })
   )
 }
@@ -75,7 +75,7 @@ export const getOrders = async (products: Product[], collection: Map<number, ORD
  * @return \App\Models\ORDER
  */
 const getOrderRow = (product: Product, collection: Map<number, ORDER>): ORDER => {
-  return collection.get(product.id);
+  return collection.get(product.id)
 }
 
 /**
@@ -86,24 +86,24 @@ const getOrderRow = (product: Product, collection: Map<number, ORDER>): ORDER =>
  * @return Promise<\App\Models\Ingredient[]|null>
  */
 const getProductIngredients = async (product: Product, collection: Map<number, ORDER>): Promise<Ingredient[]|null> => {
-  const row: ORDER = getOrderRow(product, collection);
+  const row: ORDER = getOrderRow(product, collection)
   const ingredients = await product.related('ingredients').query()
-        .pivotColumns(['quantity']).exec();
+        .pivotColumns(['quantity']).exec()
 
   const isQuantityOkay = ingredients.every((ingredient: Ingredient) => {
     if (row !== undefined) {
       const quantity = row.quantity * ingredient.pivotQuantity
-      return ingredient.quantityAvailable > quantity;
+      return ingredient.quantityAvailable > quantity
     }
 
-    return false;
-  });
+    return false
+  })
 
   if (!isQuantityOkay) {
-    return null;
+    return null
   }
 
-  return ingredients;
+  return ingredients
 }
 
 /**
@@ -116,14 +116,14 @@ const getProductIngredients = async (product: Product, collection: Map<number, O
  * @return Promise<\App\Models\Order>
  */
 const saveOrder = async (product: Product, collection: Map<number, ORDER>, auth: AuthContract, status: boolean = true): Promise<Order> => {
-  const row: ORDER = getOrderRow(product, collection);
+  const row: ORDER = getOrderRow(product, collection)
 
   return await Order.create({
     userId: auth.use('api').user?.id,
     productId: product.id,
     quantity: row?.quantity,
     isSuccessful: status ? 1 : 0
-  });
+  })
 }
 
 /**
@@ -136,17 +136,17 @@ const saveOrder = async (product: Product, collection: Map<number, ORDER>, auth:
  */
 const processOrder = async (product: Product, collection: Map<number, ORDER>, auth: AuthContract): Promise<Order> =>
 {
-  const ingredients = await getProductIngredients(product, collection);
+  const ingredients = await getProductIngredients(product, collection)
 
   if (ingredients === null) {
-      return await saveOrder(product, collection, auth, false);
+      return await saveOrder(product, collection, auth, false)
   }
 
   ingredients.map(async (ingredient: Ingredient) => {
-    await updateIngredientQuantity(product, collection, ingredient);
-  });
+    await updateIngredientQuantity(product, collection, ingredient)
+  })
 
-  return await saveOrder(product, collection, auth);
+  return await saveOrder(product, collection, auth)
 }
 
 /**
@@ -158,17 +158,17 @@ const processOrder = async (product: Product, collection: Map<number, ORDER>, au
  * @return Promise<void>
  */
 const updateIngredientQuantity = async (product: Product, collection: Map<number, ORDER>, ingredient: Ingredient): Promise<void> => {
-  const row: ORDER = getOrderRow(product, collection);
+  const row: ORDER = getOrderRow(product, collection)
 
   if (row !== undefined) {
-    const quantityTaken = row.quantity * ingredient.pivotQuantity;
+    const quantityTaken = row.quantity * ingredient.pivotQuantity
 
     await ingredient.merge({
         quantityAvailable: ingredient.quantityAvailable - quantityTaken,
         lastReorderAt: ingredient.lastReorderAt
-    }).save();
+    }).save()
   }
 
   //Dispatch event
-  Event.emit('merchant:reorderlevel', ingredient);
+  Event.emit('merchant:reorderlevel', ingredient)
 }

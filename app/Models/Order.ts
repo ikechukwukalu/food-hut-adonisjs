@@ -1,7 +1,7 @@
-import { DateTime } from 'luxon';
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm';
-import Merchant from 'App/Models/Merchant';
-import Product from 'App/Models/Product';
+import { DateTime } from 'luxon'
+import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import Merchant from 'App/Models/Merchant'
+import Product from 'App/Models/Product'
 
 export default class Order extends BaseModel {
   @column({ isPrimary: true })
@@ -17,7 +17,7 @@ export default class Order extends BaseModel {
   public quantity: number
 
   @column({ serialize: (value: number) => {
-      return value === 1 ? true : false;
+      return value === 1 ? true : false
     }
   })
   public isSuccessful: number | boolean

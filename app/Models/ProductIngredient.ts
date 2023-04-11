@@ -1,6 +1,6 @@
-import { DateTime } from 'luxon';
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm';
-import Merchant from 'App/Models/Merchant';
+import { DateTime } from 'luxon'
+import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import Merchant from 'App/Models/Merchant'
 
 export default class ProductIngredient extends BaseModel {
   @column({ isPrimary: true })

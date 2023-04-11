@@ -1,7 +1,7 @@
-import { DateTime } from 'luxon';
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm';
-import Merchant from 'App/Models/Merchant';
-import Ingredient from 'App/Models/Ingredient';
+import { DateTime } from 'luxon'
+import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import Merchant from 'App/Models/Merchant'
+import Ingredient from 'App/Models/Ingredient'
 
 export default class ReorderNotification extends BaseModel {
   @column({ isPrimary: true })

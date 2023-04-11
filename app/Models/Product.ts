@@ -1,8 +1,8 @@
-import { DateTime } from 'luxon';
-import { BaseModel, column, hasMany, HasMany, belongsTo, BelongsTo, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm';
-import Merchant from 'App/Models/Merchant';
-import Order from 'App/Models/Order';
-import Ingredient from 'App/Models/Ingredient';
+import { DateTime } from 'luxon'
+import { BaseModel, column, hasMany, HasMany, belongsTo, BelongsTo, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import Merchant from 'App/Models/Merchant'
+import Order from 'App/Models/Order'
+import Ingredient from 'App/Models/Ingredient'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })

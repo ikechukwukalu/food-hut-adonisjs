@@ -1,7 +1,7 @@
-import Factory from '@ioc:Adonis/Lucid/Factory';
-import User from 'App/Models/User';
-import moment from 'moment';
-import crypto from 'crypto';
+import Factory from '@ioc:Adonis/Lucid/Factory'
+import User from 'App/Models/User'
+import moment from 'moment'
+import crypto from 'crypto'
 
 export const UserFactory = Factory
   .define(User, ({ faker }) => {
@@ -13,4 +13,4 @@ export const UserFactory = Factory
       remember_me_token: crypto.randomBytes(20).toString('hex'),
     }
   })
-  .build();
+  .build()

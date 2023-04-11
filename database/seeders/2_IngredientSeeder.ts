@@ -1,12 +1,12 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder';
-import Merchant from 'App/Models/Merchant';
-import Ingredient from 'App/Models/Ingredient';
-import moment from 'moment';
+import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import Merchant from 'App/Models/Merchant'
+import Ingredient from 'App/Models/Ingredient'
+import moment from 'moment'
 
 export default class extends BaseSeeder {
   public async run () {
     // Write your database queries inside the run method
-    const merchant = await Merchant.findBy('email', 'test@example.com');
+    const merchant = await Merchant.findBy('email', 'test@example.com')
 
     if (merchant) {
       Ingredient.firstOrCreate(
@@ -18,7 +18,7 @@ export default class extends BaseSeeder {
               quantityStocked: 20000,
               userId: merchant.id,
               lastReorderAt: moment().format('YYYY-MM-DD HH:mm:ss')
-          });
+          })
 
       Ingredient.firstOrCreate(
           {name: 'Cheese'},
@@ -29,7 +29,7 @@ export default class extends BaseSeeder {
               quantityStocked: 5000,
               userId: merchant.id,
               lastReorderAt: moment().format('YYYY-MM-DD HH:mm:ss')
-          });
+          })
 
       Ingredient.firstOrCreate(
           {name: 'Onion'},
@@ -40,7 +40,7 @@ export default class extends BaseSeeder {
               quantityStocked: 1000,
               userId: merchant.id,
               lastReorderAt: moment().format('YYYY-MM-DD HH:mm:ss')
-          });
+          })
     }
   }
 }

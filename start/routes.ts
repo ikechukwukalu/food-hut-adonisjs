@@ -18,6 +18,6 @@
 |
 */
 
-import './routes/web';
-import './routes/auth';
-import './routes/order';
+import './routes/web'
+import './routes/auth'
+import './routes/order'

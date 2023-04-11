@@ -1,13 +1,13 @@
-import { scope, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm';
-import User from 'App/Models/User';
-import Order from 'App/Models/Order';
-import Ingredient from 'App/Models/Ingredient';
-import Product from 'App/Models/Product';
-import ProductIngredient from 'App/Models/ProductIngredient';
-import ReorderNotification from 'App/Models/ReorderNotification';
+import { scope, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import User from 'App/Models/User'
+import Order from 'App/Models/Order'
+import Ingredient from 'App/Models/Ingredient'
+import Product from 'App/Models/Product'
+import ProductIngredient from 'App/Models/ProductIngredient'
+import ReorderNotification from 'App/Models/ReorderNotification'
 
 export default class Merchant extends User {
-  public static table = 'users';
+  public static table = 'users'
 
   @hasMany(() => Order, {
     localKey: 'id',
@@ -28,6 +28,6 @@ export default class Merchant extends User {
   public reorderNotifications: HasMany<typeof ReorderNotification>
 
   public static merchant = scope((query) => {
-    query.where('is_merchant', true);
+    query.where('is_merchant', true)
   })
 }

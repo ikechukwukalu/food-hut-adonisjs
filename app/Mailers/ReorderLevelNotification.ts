@@ -1,12 +1,12 @@
-import { BaseMailer, MessageContract } from '@ioc:Adonis/Addons/Mail';
-import Env from '@ioc:Adonis/Core/Env';
-import I18n from '@ioc:Adonis/Addons/I18n';
-import Merchant from 'App/Models/Merchant';
-import Ingredient from 'App/Models/Ingredient';
+import { BaseMailer, MessageContract } from '@ioc:Adonis/Addons/Mail'
+import Env from '@ioc:Adonis/Core/Env'
+import I18n from '@ioc:Adonis/Addons/I18n'
+import Merchant from 'App/Models/Merchant'
+import Ingredient from 'App/Models/Ingredient'
 
 export default class ReorderLevelNotification extends BaseMailer {
   constructor (private merchant: Merchant, private ingredient: Ingredient) {
-    super();
+    super()
   }
 
   /**
@@ -37,6 +37,6 @@ export default class ReorderLevelNotification extends BaseMailer {
         action: I18n.locale('en').formatMessage('order.mail.action'),
         complimentaryClose: I18n.locale('en').formatMessage('order.mail.complimentary_close'),
         url: Env.get('APP_URL'),
-      });
+      })
   }
 }

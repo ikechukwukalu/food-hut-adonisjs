@@ -1,8 +1,8 @@
-import { schema, rules as schemaRules, validator } from '@ioc:Adonis/Core/Validator';
-import { RequestContract } from '@ioc:Adonis/Core/Request';
+import { schema, rules as schemaRules, validator } from '@ioc:Adonis/Core/Validator'
+import { RequestContract } from '@ioc:Adonis/Core/Request'
 
 const AUTHORIZE = (): boolean => {
-  return true;
+  return true
 }
 
 const RULES = (): any => {
@@ -23,12 +23,12 @@ export default class OrderRequest {
     if (AUTHORIZE() === false) {
       return {
         errors: 'Unauthorized'
-      };
+      }
     }
 
     return await request.validate({
       schema: RULES(),
       reporter: validator.reporters.api, //For APIs
-    });
+    })
   }
 }

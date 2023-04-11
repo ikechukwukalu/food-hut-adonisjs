@@ -1,8 +1,8 @@
-import { DateTime } from 'luxon';
-import { BaseModel, column, belongsTo, BelongsTo, manyToMany, ManyToMany, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm';
-import Merchant from 'App/Models/Merchant';
-import Product from 'App/Models/Product';
-import ReorderNotification from 'App/Models/ReorderNotification';
+import { DateTime } from 'luxon'
+import { BaseModel, column, belongsTo, BelongsTo, manyToMany, ManyToMany, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import Merchant from 'App/Models/Merchant'
+import Product from 'App/Models/Product'
+import ReorderNotification from 'App/Models/ReorderNotification'
 
 export default class Ingredient extends BaseModel {
   @column({ isPrimary: true })
@@ -61,20 +61,20 @@ export default class Ingredient extends BaseModel {
                         .query()
                         .where('ingredient_id', ingredient.id)
                         .where('last_reorder_at', ingredient.lastReorderAt)
-                        .first();
+                        .first()
 
     if (!ingredientExists) {
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 
   public static isDueForReorder(ingredient: Ingredient): boolean
   {
-      const half = ingredient.quantityStocked / 2;
-      const diff = ingredient.quantityStocked - ingredient.quantityAvailable;
+      const half = ingredient.quantityStocked / 2
+      const diff = ingredient.quantityStocked - ingredient.quantityAvailable
 
-      return half <= diff;
+      return half <= diff
   }
 }

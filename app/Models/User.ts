@@ -1,6 +1,6 @@
-import { DateTime } from 'luxon';
-import Hash from '@ioc:Adonis/Core/Hash';
-import { column, beforeSave, BaseModel, scope } from '@ioc:Adonis/Lucid/Orm';
+import { DateTime } from 'luxon'
+import Hash from '@ioc:Adonis/Core/Hash'
+import { column, beforeSave, BaseModel, scope } from '@ioc:Adonis/Lucid/Orm'
 
 
 export default class User extends BaseModel {
@@ -20,7 +20,7 @@ export default class User extends BaseModel {
   public password: string
 
   @column({ serialize: (value: number) => {
-      return value === 1 ? true : false;
+      return value === 1 ? true : false
     }
   })
   public isMerchant: number | boolean
@@ -42,7 +42,7 @@ export default class User extends BaseModel {
   }
 
   public static merchant = scope((query) => {
-    query.where('is_merchant', false);
+    query.where('is_merchant', false)
   })
 
 }

@@ -1,7 +1,7 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder';
-import Merchant from 'App/Models/Merchant';
-import moment from 'moment';
-import crypto from 'crypto';
+import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import Merchant from 'App/Models/Merchant'
+import moment from 'moment'
+import crypto from 'crypto'
 
 export default class extends BaseSeeder {
   public async run () {

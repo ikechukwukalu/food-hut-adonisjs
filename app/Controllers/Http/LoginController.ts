@@ -1,12 +1,12 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import LoginRequest from 'App/Requests/LoginRequest';
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import LoginRequest from 'App/Requests/LoginRequest'
 
 export default class LoginController {
   public async login({ auth, request }: HttpContextContract)
   {
-    const payload = await LoginRequest.validate(request);
+    const payload = await LoginRequest.validate(request)
     if (payload.hasOwnProperty('errors')) {
-      return payload;
+      return payload
     }
 
     try {

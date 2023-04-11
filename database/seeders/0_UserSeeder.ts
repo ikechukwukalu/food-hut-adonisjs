@@ -1,4 +1,4 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder';
+import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import { UserFactory } from 'Database/factories'
 
 export default class extends BaseSeeder {
@@ -10,7 +10,7 @@ export default class extends BaseSeeder {
       password: '12345678',
       name: 'Test user',
     })
-    .create();
-    await UserFactory.createMany(10);
+    .create()
+    await UserFactory.createMany(10)
   }
 }
