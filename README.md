@@ -1,7 +1,7 @@
 # Food Hut
 
 [![Quality Score](https://img.shields.io/scrutinizer/quality/g/ikechukwukalu/food-hut-adonisjs/main?style=flat-square)](https://scrutinizer-ci.com/g/ikechukwukalu/food-hut-adonisjs/)
-[![Code Quality](https://img.shields.io/codefactor/grade/github/ikechukwukalu/foodhut?style=flat-square)](https://www.codefactor.io/repository/github/ikechukwukalu/foodhut)
+[![Code Quality](https://img.shields.io/codefactor/grade/github/ikechukwukalu/food-hut-adonisjs?style=flat-square)](https://www.codefactor.io/repository/github/ikechukwukalu/food-hut-adonisjs)
 [![Github Workflow Status](https://img.shields.io/github/actions/workflow/status/ikechukwukalu/food-hut-adonisjs/foodhut.yml?branch=main&style=flat-square)](https://github.com/ikechukwukalu/food-hut-adonisjs/actions/workflows/foodhut.yml)
 
 This is a sample REST API that returns JSON as a response.
