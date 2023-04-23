@@ -71,6 +71,8 @@ jobs:
             cd /tmp/production/food-hut-adonisjs
             sudo git checkout main
             sudo npm install
+            sudo touch .env
+            echo "$DOT_ENV" | sudo tee /tmp/production/food-hut-adonisjs/.env
             sudo node ace migration:fresh --seed
             sudo npm run build
             sudo rm -r $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs-old
@@ -80,9 +82,9 @@ jobs:
             sudo rm -r /tmp/production/food-hut-adonisjs
             cd $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
             sudo touch .env
-            echo "$DOT_ENV" | sudo tee /tmp/production/food-hut-adonisjs/.env
+            echo "$DOT_ENV" | sudo tee $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs/.env
             sudo touch server.json
-            echo "$SERVER_JSON" | sudo tee /tmp/production/food-hut-adonisjs/server.json
+            echo "$SERVER_JSON" | sudo tee $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs/server.json
             sudo chmod -R 0755 $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
             pm2 restart food-hut-adonisjs
 
