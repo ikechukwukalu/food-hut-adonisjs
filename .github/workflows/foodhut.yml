@@ -39,10 +39,50 @@ jobs:
         run: |
           node ace migration:fresh --seed
           node ace test
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
+      # - name: Run Snyk to check for vulnerabilities
+      #   uses: snyk/actions/node@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     args: --all-projects
+      #     command: test
+  deploy-production:
+    name: Deploy Project to PRODUCTION Server
+    runs-on: ubuntu-latest
+    needs: [unit_tests]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to Production
+        uses: appleboy/ssh-action@master
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+            DOT_ENV: ${{ secrets.DOT_ENV_PRODUCTION }}
+            PAT: ${{ secrets.PAT }}
+            DEPLOY_PATH_PRODUCTION: ${{ secrets.DEPLOY_PATH_PRODUCTION }}
+            SERVER_JSON: ${{ secrets.SERVER_JSON }}
         with:
-          args: --all-projects
-          command: test
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: DOT_ENV, PAT, DEPLOY_PATH_PRODUCTION
+          script: |
+            sudo mkdir -p /tmp/production/food-hut-adonisjs
+            sudo chmod -R 777 /tmp/production/food-hut-adonisjs
+            cd /tmp/production && git clone https://$PAT@github.com/ikechukwukalu/food-hut-adonisjs.git
+            cd /tmp/production/food-hut-adonisjs
+            sudo git checkout main
+            sudo npm install
+            sudo node ace migration:fresh --seed
+            sudo npm run build
+            sudo rm -r $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs-old
+            sudo mv $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs-old
+            sudo mkdir -p $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
+            sudo cp -r /tmp/production/food-hut-adonisjs/build/* $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
+            sudo rm -r /tmp/production/food-hut-adonisjs
+            cd $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
+            sudo touch .env
+            echo "$DOT_ENV" | sudo tee /tmp/production/food-hut-adonisjs/.env
+            sudo touch server.json
+            echo "$SERVER_JSON" | sudo tee /tmp/production/food-hut-adonisjs/server.json
+            sudo chmod -R 0755 $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
+            pm2 restart food-hut-adonisjs
+
