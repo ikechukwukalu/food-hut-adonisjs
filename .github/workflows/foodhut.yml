@@ -74,10 +74,11 @@ jobs:
             sudo touch .env
             echo "$DOT_ENV" | sudo tee /tmp/production/food-hut-adonisjs/.env
             sudo node ace migration:fresh --seed
+            sudo npm run build
             sudo rm -r $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs-old
             sudo mv $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs-old
             sudo mkdir -p $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
-            sudo cp -r /tmp/production/food-hut-adonisjs/* $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
+            sudo cp -r /tmp/production/food-hut-adonisjs/build/* $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
             sudo rm -r /tmp/production/food-hut-adonisjs
             cd $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
             sudo touch .env
