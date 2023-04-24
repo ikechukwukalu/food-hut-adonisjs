@@ -61,7 +61,7 @@ jobs:
         with:
           switches: -avzr --delete
           path: build/
-          remote_path: ${{ secrets.DEPLOY_PATH_PRODUCTION }}
+          remote_path: ${{ secrets.DEPLOY_PATH_PRODUCTION }}/food-hut-adonisjs
           remote_host: ${{ secrets.REMOTE_HOST }}
           remote_user: ${{ secrets.SSH_USERNAME }}
           remote_key: "${{ secrets.SSH_PRIVATE_KEY }}"
@@ -91,5 +91,5 @@ jobs:
             sudo touch server.json
             echo "$SERVER_JSON" | sudo tee $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs/server.json
             sudo chmod -R 0755 $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
-            pm2 start server.json --name=food-hut-adonisjs
+            sudo pm2 start server.json --watch
 
