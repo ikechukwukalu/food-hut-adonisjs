@@ -75,15 +75,14 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
             DOT_ENV: ${{ secrets.DOT_ENV_PRODUCTION }}
-            PAT: ${{ secrets.PAT }}
-            DEPLOY_PATH_PRODUCTION: ${{ secrets.DEPLOY_PATH_PROD
-            SERVER_JSON: ${{ secrets.SERVER_JSON }}UCTION }}
+            DEPLOY_PATH_PRODUCTION: ${{ secrets.DEPLOY_PATH_PRODUCTION }}
+            SERVER_JSON: ${{ secrets.SERVER_JSON }}
             SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: DOT_ENV, PAT, DEPLOY_PATH_PRODUCTION, SERVER_JSON, SSH_USERNAME
+          envs: DOT_ENV, DEPLOY_PATH_PRODUCTION, SERVER_JSON, SSH_USERNAME
           script: |
             cd $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
             sudo touch .env
