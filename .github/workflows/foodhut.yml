@@ -76,13 +76,14 @@ jobs:
         env:
             DOT_ENV: ${{ secrets.DOT_ENV_PRODUCTION }}
             PAT: ${{ secrets.PAT }}
-            DEPLOY_PATH_PRODUCTION: ${{ secrets.DEPLOY_PATH_PRODUCTION }}
-            SERVER_JSON: ${{ secrets.SERVER_JSON }}
+            DEPLOY_PATH_PRODUCTION: ${{ secrets.DEPLOY_PATH_PROD
+            SERVER_JSON: ${{ secrets.SERVER_JSON }}UCTION }}
+            SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: DOT_ENV, PAT, DEPLOY_PATH_PRODUCTION, SERVER_JSON
+          envs: DOT_ENV, PAT, DEPLOY_PATH_PRODUCTION, SERVER_JSON, SSH_USERNAME
           script: |
             cd $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
             sudo touch .env
@@ -92,5 +93,6 @@ jobs:
             sudo touch server.json
             echo "$SERVER_JSON" | sudo tee $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs/server.json
             sudo chmod -R 0755 $DEPLOY_PATH_PRODUCTION/food-hut-adonisjs
+            sudo chown -R $SSH_USERNAME:$SSH_USERNAME $DEPLOY_PATH_PRODUCTION
             sudo pm2 start server.json --watch
 
