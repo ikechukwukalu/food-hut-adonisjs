@@ -27,8 +27,6 @@ jobs:
         run: cp .env.example .env
       - name: Install dependencies
         run: npm install
-      - name: Build
-        run: node ace build --production
       - name: Run migrations and Execute tests
         env:
           DB_CONNECTION: mysql
@@ -56,8 +54,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm ci
-      - run: npm run build
-      - run: npm run test
+      - name: Build
+        run: npm run build
       - name: rsync deployments
         uses: burnett01/rsync-deployments@5.2.1
         with:
