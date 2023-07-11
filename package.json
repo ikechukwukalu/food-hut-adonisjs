@@ -67,7 +67,7 @@
     "@adonisjs/mail": "^8.1.2",
     "@adonisjs/repl": "^3.1.11",
     "@adonisjs/session": "^6.4.0",
-    "@adonisjs/shield": "^7.1.0",
+    "@adonisjs/shield": "^7.1.1",
     "@adonisjs/view": "^6.2.0",
     "aws-sdk": "^2.1354.0",
     "luxon": "^3.3.0",
